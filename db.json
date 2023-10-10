@@ -23,6 +23,12 @@
       "password": "Sr@12356",
       "status": "active",
       "id": "1aCgO8U"
+    },
+    {
+      "email": "utest@yahoo.com",
+      "password": "Solar2@Power",
+      "status": "active",
+      "id": "a_G4ckY"
     }
   ]
 }
