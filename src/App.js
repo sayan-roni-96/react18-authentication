@@ -4,7 +4,7 @@ import Login from './pages/Login';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app_login">
     <h1>Welcome to My React App</h1>
     <body>
     <Login /> {/* Render the Login component here */}
