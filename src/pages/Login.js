@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import {Icon} from 'react-icons-kit';
-// import {eyeOff} from 'react-icons-kit/feather/eyeOff';
-// import {eye} from 'react-icons-kit/feather/eye'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import './Login.css';
+import { AiFillEye } from 'react-icons/ai';
 
 // Import an SVG eye icon (you can use any SVG icon you prefer)
 //import EyeIcon from './eye-icon.svg';
@@ -29,7 +27,8 @@ const Login = () => {
   };
 
   const isPasswordValid = (password) => {
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
     return passwordRegex.test(password);
   };
 
@@ -39,8 +38,8 @@ const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-   
-   let hasError = false;
+
+    let hasError = false;
 
     if (email.trim() === '') {
       toast.error('Please fill in the email field.');
@@ -70,11 +69,10 @@ const Login = () => {
           console.log('resp =>', resp);
           if (resp.status === 201) {
             console.log('User added successfully.');
-            localStorage.setItem("userdata",JSON.stringify(resp.data))
+            localStorage.setItem('userdata', JSON.stringify(resp.data));
             setEmail('');
             setPassword('');
             setIsChecked(false);
-
           }
         })
         .catch((err) => {
@@ -82,17 +80,17 @@ const Login = () => {
         });
     }
   };
-//   const handleToggle = () => {
-//    if (type==='password'){
-//       setIcon(eye);
-//       setType('text')
-//    } else {
-//       setIcon(eyeOff)
-//       setType('password')
-//    }
-// }
-  const getLocalstorageData = JSON.parse(localStorage.getItem("userdata"))
-console.log("getLocalstorageData->",getLocalstorageData);
+  //   const handleToggle = () => {
+  //    if (type==='password'){
+  //       setIcon(eye);
+  //       setType('text')
+  //    } else {
+  //       setIcon(eyeOff)
+  //       setType('password')
+  //    }
+  // }
+  const getLocalstorageData = JSON.parse(localStorage.getItem('userdata'));
+  console.log('getLocalstorageData->', getLocalstorageData);
   return (
     <>
       <form onSubmit={handleFormSubmit}>
@@ -109,7 +107,8 @@ console.log("getLocalstorageData->",getLocalstorageData);
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <br /><br />
+          <br />
+          <br />
           <label htmlFor="pswrd">Your password</label>
           <div className="password-input-container">
             <input
@@ -119,12 +118,10 @@ console.log("getLocalstorageData->",getLocalstorageData);
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-              {/* <span class="flex justify-around items-center" onClick={handleToggle}>
-                  <Icon class="absolute mr-10" icon={icon} size={25}/>
-              </span> */}
-              {/* Add the SVG eye icon here */}
-             {/* <img src={EyeIcon} alt="Toggle Password Visibility" /> */}
-            
+            <span className="flex justify-around items-center">
+              <AiFillEye />
+            </span>
+            {/* Add the SVG eye icon here */}
           </div>
           <label>
             <input
@@ -136,14 +133,18 @@ console.log("getLocalstorageData->",getLocalstorageData);
             {isChecked ? 'Active' : 'Inactive'}
           </label>
           <div className="subcontainer">
-            <p className="forgotpsd"><a href="#">Forgot Password?</a></p>
+            <p className="forgotpsd">
+              <a href="#">Forgot Password?</a>
+            </p>
           </div>
           {error && <p className="error">{error}</p>}
           <button type="submit">Login</button>
-          <p className="register">Not a member? <a href="#">Register here!</a></p>
+          <p className="register">
+            Not a member? <a href="#">Register here!</a>
+          </p>
         </div>
       </form>
-       <ToastContainer position="top-right" autoClose={5000} />
+      <ToastContainer position="top-right" autoClose={5000} />
     </>
   );
 };
