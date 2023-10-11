@@ -1,7 +1,16 @@
 import React from 'react';
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  const LogOut = () => {
+    localStorage.removeItem('userdata');
+    window.location.reload();
+  };
+  return (
+    <>
+      <h1>Dashboard</h1>
+      <button onClick={() => LogOut()}>Logout</button>
+    </>
+  );
 };
 
 export default Dashboard;

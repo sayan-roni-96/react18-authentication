@@ -3,7 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import './Login.css';
-import { AiFillEye } from 'react-icons/ai';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 
 // Import an SVG eye icon (you can use any SVG icon you prefer)
 //import EyeIcon from './eye-icon.svg';
@@ -16,9 +16,13 @@ const Login = () => {
   const [type, setType] = useState('password');
   //const [icon, setIcon] = useState(eyeOff);
   //const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const handleCheckboxChange = () => {
     setIsChecked(!isChecked);
+  };
+  const togglePasswordVisibility = () => {
+    setIsPasswordVisible(!isPasswordVisible);
   };
 
   const isEmailValid = (email) => {
@@ -69,10 +73,12 @@ const Login = () => {
           console.log('resp =>', resp);
           if (resp.status === 201) {
             console.log('User added successfully.');
+
             localStorage.setItem('userdata', JSON.stringify(resp.data));
             setEmail('');
             setPassword('');
             setIsChecked(false);
+            window.location.reload();
           }
         })
         .catch((err) => {
@@ -89,8 +95,7 @@ const Login = () => {
   //       setType('password')
   //    }
   // }
-  const getLocalstorageData = JSON.parse(localStorage.getItem('userdata'));
-  console.log('getLocalstorageData->', getLocalstorageData);
+
   return (
     <>
       <form onSubmit={handleFormSubmit}>
@@ -112,14 +117,18 @@ const Login = () => {
           <label htmlFor="pswrd">Your password</label>
           <div className="password-input-container">
             <input
-              type="password" // Toggle input type based on visibility
+              type={isPasswordVisible ? 'text' : 'password'} // Toggle input type based on visibility
               placeholder="Enter Password"
               name="pswrd"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <span className="flex justify-around items-center">
-              <AiFillEye />
+            <span
+              className="flex justify-around items-center"
+              onClick={togglePasswordVisibility}
+              style={{ cursor: 'pointer' }}
+            >
+              {isPasswordVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
             </span>
             {/* Add the SVG eye icon here */}
           </div>
