@@ -73,10 +73,12 @@ const Login = () => {
           console.log('resp =>', resp);
           if (resp.status === 201) {
             console.log('User added successfully.');
+
             localStorage.setItem('userdata', JSON.stringify(resp.data));
             setEmail('');
             setPassword('');
             setIsChecked(false);
+            window.location.reload();
           }
         })
         .catch((err) => {
@@ -93,8 +95,7 @@ const Login = () => {
   //       setType('password')
   //    }
   // }
-  const getLocalstorageData = JSON.parse(localStorage.getItem('userdata'));
-  console.log('getLocalstorageData->', getLocalstorageData);
+
   return (
     <>
       <form onSubmit={handleFormSubmit}>
@@ -123,12 +124,12 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <span
-            className="flex justify-around items-center"
-            onClick={togglePasswordVisibility}
-            style={{ cursor: 'pointer' }}
-          >
-            {isPasswordVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
-          </span>
+              className="flex justify-around items-center"
+              onClick={togglePasswordVisibility}
+              style={{ cursor: 'pointer' }}
+            >
+              {isPasswordVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
+            </span>
             {/* Add the SVG eye icon here */}
           </div>
           <label>

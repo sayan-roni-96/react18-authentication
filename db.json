@@ -29,6 +29,24 @@
       "password": "Solar2@Power",
       "status": "active",
       "id": "a_G4ckY"
+    },
+    {
+      "email": "john@yahoo.com",
+      "password": "John@12Vogan",
+      "status": "active",
+      "id": "Emb_MJ5"
+    },
+    {
+      "email": "rahim@yahoo.com",
+      "password": "Rahin@12Sen",
+      "status": "active",
+      "id": "WWhMQyJ"
+    },
+    {
+      "email": "utest1@yahoo.com",
+      "password": "Utest!2Test",
+      "status": "active",
+      "id": "mcf-ghT"
     }
   ]
 }
