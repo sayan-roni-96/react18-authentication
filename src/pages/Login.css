@@ -111,3 +111,72 @@ span.forgotpsd a {
       width: 20rem;
     }
   }
+  /* Add this CSS to your stylesheet */
+.dashboard-container {
+  text-align: center;
+}
+
+header {
+  background: #333;
+  color: #fff;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.banner-container {
+  position: relative;
+}
+
+.banner-container img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+}
+
+.banner-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  text-align: center;
+}
+
+.banner-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.banner-subtitle {
+  font-size: 2rem;
+}
+/* Add this CSS to your stylesheet */
+.categories {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.category {
+  width: 23%; /* Adjust this width to your liking */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Adjust the CSS further to meet your design preferences. */
+
