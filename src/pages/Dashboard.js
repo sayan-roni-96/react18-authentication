@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 
 const Dashboard = () => {
   const [categories, setCategories] = useState([]);
@@ -36,14 +37,28 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="categories">
+      <Container>
+      <Row>
+      {categories.slice(0, showAllCategories ? categories.length : 4).map((category) => (
+          <Col key={category.id} sm={6} md={3}>
+            <Card>
+              <Card.Img variant="top" src={category.image} />
+              <Card.Body>
+                <Card.Title>{category.name}</Card.Title>
+              </Card.Body>
+            </Card>
+          </Col>
+        ))}
+      </Row>
+    </Container>
+      {/* <div className="categories">
         {categories.slice(0, showAllCategories ? categories.length : 4).map((category) => (
           <div key={category.id} className="category">
             <img src={category.image} alt={category.name} />
             <h3>{category.name}</h3>
           </div>
         ))}
-      </div>
+      </div> */}
       <button onClick={toggleCategoriesView} className="view-more-button">
         {showAllCategories ? 'Show Less' : 'View More'}
       </button>

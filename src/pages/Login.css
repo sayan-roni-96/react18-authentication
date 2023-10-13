@@ -166,16 +166,21 @@ button {
   font-size: 2rem;
 }
 /* Add this CSS to your stylesheet */
-.categories {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.category-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin: 10px;
+  text-align: center;
+  background-color: #f7f7f7;
 }
 
-.category {
-  width: 23%; /* Adjust this width to your liking */
-  margin-bottom: 20px;
-  text-align: center;
+.category-card img {
+  max-width: 100%;
+  height: auto;
+}
+
+.category-card h3 {
+  margin-top: 10px;
 }
 
 /* Adjust the CSS further to meet your design preferences. */
