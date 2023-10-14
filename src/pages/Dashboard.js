@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
+import Header from './header_footer/Header';
+import Footer from './header_footer/Footer';
 
 const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [showAllCategories, setShowAllCategories] = useState(false);
 
-  const LogOut = () => {
-    localStorage.removeItem('userdata');
-    window.location.reload();
-  };
+  
 
   useEffect(() => {
     // Fetch categories data from your API
@@ -24,10 +23,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <header>
-        <h1>Dashboard</h1>
-        <button onClick={LogOut}>Logout</button>
-      </header>
+      <Header/>
       <div className="banner-container">
         <img src="/assets/banner_1.jpeg" alt="Background" />
         <div className="banner-content">
@@ -63,11 +59,7 @@ const Dashboard = () => {
         {showAllCategories ? 'Show Less' : 'View More'}
       </button>
      
-      <footer className="footer">
-        <div className="container">
-          <p>&copy; {new Date().getFullYear()} Your E-commerce Site</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
