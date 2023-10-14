@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
 import './Login.css';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 // Import an SVG eye icon (you can use any SVG icon you prefer)
 //import EyeIcon from './eye-icon.svg';
 
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [userName, setUserName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -42,10 +44,13 @@ const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    console.log('api=>', `${process.env.REACT_APP_USER_ONLINE_API}/api/users`);
 
     let hasError = false;
-
-    if (email.trim() === '') {
+    if (userName == '' || userName.trim() == '') {
+      toast.error('Please fill in the username field.');
+      hasError = true;
+    } else if (email.trim() === '') {
       toast.error('Please fill in the email field.');
       hasError = true;
     } else if (!isEmailValid(email)) {
@@ -56,19 +61,21 @@ const Login = () => {
         'Please enter a valid password with at least 6 characters, one uppercase letter, one lowercase letter, one special character, and one digit.'
       );
       hasError = true;
-    } else if (!isChecked) {
-      toast.error('Please check the checkbox.');
-      hasError = true;
     }
 
     if (!hasError) {
-      const newData = {
+      const formFieldData = {
+        username: email,
         email: email,
         password: password,
-        status: isChecked ? 'active' : 'inactive',
       };
+
+      const userData = {
+        user: formFieldData,
+      };
+
       axios
-        .post(`${process.env.REACT_APP_BASE_URL}/users`, newData)
+        .post(`${process.env.REACT_APP_USER_ONLINE_API}/api/users`, userData)
         .then((resp) => {
           console.log('resp =>', resp);
           if (resp.status === 201) {
@@ -77,7 +84,6 @@ const Login = () => {
             localStorage.setItem('userdata', JSON.stringify(resp.data));
             setEmail('');
             setPassword('');
-            setIsChecked(false);
             window.location.reload();
           }
         })
@@ -104,6 +110,15 @@ const Login = () => {
           <p>Sign in with your username and password</p>
         </div>
         <div className="mainContainer">
+          <label htmlFor="username">User Name</label>
+          <input
+            type="text"
+            placeholder="Enter Username"
+            name="username"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <br />
           <label htmlFor="email">Your Email</label>
           <input
             type="text"
@@ -132,24 +147,11 @@ const Login = () => {
             </span>
             {/* Add the SVG eye icon here */}
           </div>
-          <label>
-            <input
-              type="checkbox"
-              checked={isChecked}
-              onChange={handleCheckboxChange}
-              name="remember"
-            />
-            {isChecked ? 'Active' : 'Inactive'}
-          </label>
-          <div className="subcontainer">
-            <p className="forgotpsd">
-              <a href="#">Forgot Password?</a>
-            </p>
-          </div>
+
           {error && <p className="error">{error}</p>}
           <button type="submit">Login</button>
           <p className="register">
-            Not a member? <a href="#">Register here!</a>
+            Not a member? <Link href="#">Register here!</Link>
           </p>
         </div>
       </form>
