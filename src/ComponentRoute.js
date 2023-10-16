@@ -2,6 +2,7 @@ import React from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import CategoryProducts from './pages/CategoryProducts';
 
 const ComponentRoute = () => {
   function PrivateRoute({ children }) {
@@ -50,7 +51,10 @@ const ComponentRoute = () => {
             </PrivateRoute>
           }
         />
+        {/* <Route path="/categories/:categoryId/products" component={CategoryProducts} /> */}
+        <Route path="/category-products" element={<PrivateRoute><CategoryProducts /></PrivateRoute>} />
       </Routes>
+      
     </>
   );
 };

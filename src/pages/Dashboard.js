@@ -2,10 +2,21 @@ import React, { useEffect, useState } from 'react';
 import { Card, Col, Container, Row } from 'react-bootstrap';
 import Header from './header_footer/Header';
 import Footer from './header_footer/Footer';
+import {useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [showAllCategories, setShowAllCategories] = useState(false);
+  
+  // Initialize useNavigate
+  const navigate = useNavigate();
+
+  // Function to navigate to the products page for a category
+  const navigateToCategoryProducts = (categoryId) => {
+    console.log(categoryId);
+    navigate('/category-products', { state: { categoryId } });
+  };
+  
 
   useEffect(() => {
     // Fetch categories data from your API
@@ -21,7 +32,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
-      <Header />
+      <Header/>
       <div className="banner-container">
         <img src="/assets/banner_1.jpeg" alt="Background" />
         <div className="banner-content">
@@ -32,21 +43,22 @@ const Dashboard = () => {
         </div>
       </div>
       <Container>
-        <Row>
-          {categories
-            .slice(0, showAllCategories ? categories.length : 4)
-            .map((category) => (
-              <Col key={category.id} sm={6} md={3}>
-                <Card>
-                  <Card.Img variant="top" src={category.image} />
-                  <Card.Body>
-                    <Card.Title>{category.name}</Card.Title>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-        </Row>
-      </Container>
+  <Row>
+    {categories.slice(0, showAllCategories ? categories.length : 4).map((category) => (
+      <Col key={category.id} sm={6} md={3}>
+        
+        <Card onClick={() => navigateToCategoryProducts(category.id)}>
+            <Card.Img variant="top" src={category.image} />
+            <Card.Body>
+              <Card.Title>{category.name}</Card.Title>
+            </Card.Body>
+          </Card>
+       
+      </Col>
+    ))}
+  </Row>
+</Container>
+
       {/* <div className="categories">
         {categories.slice(0, showAllCategories ? categories.length : 4).map((category) => (
           <div key={category.id} className="category">
@@ -58,7 +70,7 @@ const Dashboard = () => {
       <button onClick={toggleCategoriesView} className="view-more-button">
         {showAllCategories ? 'Show Less' : 'View More'}
       </button>
-
+     
       <Footer />
     </div>
   );
