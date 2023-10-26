@@ -36,9 +36,12 @@ const ProductModal = ({ show, product, onHide, onAddToCart }) => {
             <p>{product.description}</p>
             <p>Price: ${product.price}</p>
             <p>Quantity: {quantity}</p>
-            <Button variant="primary" onClick={() => onAddToCart(product, quantity)}>
-              Add to Cart
-            </Button>
+            <Button variant="primary" onClick={() => {
+                //addToCart(product, quantity); // Add the product to the cart
+        onHide(); // Close the modal after adding to cart
+      }}>
+        Add to Cart
+      </Button>
             <div className="d-flex justify-content-between mt-2">
               <Button variant="secondary" onClick={handleDecrement}>
                 -
