@@ -14,21 +14,25 @@ const CategoryProducts = () => {
   const [selectedProduct, setSelectedProduct] = useState(null); // Track the selected product
   const [showModal, setShowModal] = useState(false);
 
-    // Function to open the modal with the selected product
-    const openProductModal = (product) => {
-      setSelectedProduct(product);
-      setShowModal(true);
-    };
-  
-    // Function to close the modal
-    const closeProductModal = () => {
-      setSelectedProduct(null);
-      setShowModal(false);
-    };
+  // For add to cart
+  const [quantity, setQuantity] = useState(1);
+  const [storeProduct, setStoreProduct] = useState([]);
+
+  // Function to open the modal with the selected product
+  const openProductModal = (product) => {
+    setSelectedProduct(product);
+    setShowModal(true);
+  };
+
+  // Function to close the modal
+  const closeProductModal = () => {
+    setSelectedProduct(null);
+    setShowModal(false);
+  };
 
   useEffect(() => {
     fetch(`https://api.escuelajs.co/api/v1/categories/${categoryId}/products`)
-    // fetch(`${process.env.REACT_APP_USER_CATEGORY_ONLINE_API}/${categoryId}/products`)
+      // fetch(`${process.env.REACT_APP_USER_CATEGORY_ONLINE_API}/${categoryId}/products`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data); // Log the response data
@@ -36,7 +40,35 @@ const CategoryProducts = () => {
       })
       .catch((error) => console.error('Error fetching data: ', error));
   }, [categoryId]);
-  
+
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const addTocart = () => {
+    const getCurrentProduct = {
+      product: selectedProduct,
+      quantityValue: quantity,
+    };
+
+    console.log('getCurrentProduct=>', getCurrentProduct);
+
+    if (
+      storeProduct.findIndex((p) => p.product.id === selectedProduct.id) === -1
+    ) {
+      setStoreProduct([...storeProduct, getCurrentProduct]);
+    }
+    // onHide();
+  };
+
+  console.log('storeProduct=>', storeProduct);
+
   return (
     <div className="dashboard-container">
       <Header />
@@ -65,11 +97,19 @@ const CategoryProducts = () => {
       </Container>
       <Footer />
       {showModal && (
-      <ProductModal show={showModal} product={selectedProduct} onHide={closeProductModal} />
-    )}
+        <ProductModal
+          show={showModal}
+          product={selectedProduct}
+          onHide={closeProductModal}
+          storeProduct={storeProduct}
+          quantity={quantity}
+          addTocart={addTocart}
+          handleIncrement={handleIncrement}
+          handleDecrement={handleDecrement}
+        />
+      )}
     </div>
     // Wrap the ProductModal inside a parent element
-    
   );
 };
 

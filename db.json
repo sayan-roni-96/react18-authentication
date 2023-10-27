@@ -1,34 +1,10 @@
 {
   "users": [
     {
-      "email": "sayan.roni96@gmail.com",
-      "password": "Sayan@96",
-      "status": "active",
-      "id": "idEedd5"
-    },
-    {
-      "email": "utest@yahoo.com",
-      "password": "Utest@12Test",
-      "status": "active",
-      "id": "RhmAw4V"
-    },
-    {
-      "email": "sayan.roni96@gmail.com",
-      "password": "cgdk@D2",
-      "status": "active",
-      "id": "SCpGxA-"
-    },
-    {
-      "email": "sayan.roni96@gmail.com",
-      "password": "Sayan@123",
-      "status": "active",
-      "id": "9jMhCfR"
-    },
-    {
-      "email": "fgdfh@gmail.com",
-      "password": "Asdf@74123",
-      "status": "active",
-      "id": "FgXmK_A"
+      "username": "rajan23@yahoo.com",
+      "email": "rajan23@yahoo.com",
+      "password": "Rajan@12",
+      "id": 1
     }
   ]
 }

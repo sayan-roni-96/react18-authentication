@@ -75,7 +75,8 @@ const Login = () => {
       };
 
       axios
-        .post(`${process.env.REACT_APP_USER_ONLINE_API}/api/users`, userData)
+        // .post(`${process.env.REACT_APP_USER_ONLINE_API}/api/users`, userData)
+        .post(`${process.env.REACT_APP_BASE_URL}/users`, formFieldData)
         .then((resp) => {
           console.log('resp =>', resp);
           if (resp.status === 201) {
