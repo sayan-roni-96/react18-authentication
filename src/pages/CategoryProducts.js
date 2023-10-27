@@ -71,7 +71,7 @@ const CategoryProducts = () => {
 
   return (
     <div className="dashboard-container">
-      <Header />
+      <Header storeProduct={storeProduct} />
       <div className="banner-container">
         <img src="/assets/banner_1.jpeg" alt="Background" />
         <div className="banner-content">

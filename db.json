@@ -5,6 +5,18 @@
       "email": "rajan23@yahoo.com",
       "password": "Rajan@12",
       "id": 1
+    },
+    {
+      "username": "rajan@ghh.com",
+      "email": "rajan@ghh.com",
+      "password": "Rajan@123",
+      "id": 2
+    },
+    {
+      "username": "utest@yahoo.com",
+      "email": "utest@yahoo.com",
+      "password": "Rajan@123",
+      "id": 3
     }
   ]
 }
