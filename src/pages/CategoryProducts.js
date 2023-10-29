@@ -56,7 +56,7 @@ const CategoryProducts = () => {
       product: selectedProduct,
       quantityValue: quantity,
     };
-
+ 
     console.log('getCurrentProduct=>', getCurrentProduct);
 
     if (
@@ -64,7 +64,7 @@ const CategoryProducts = () => {
     ) {
       setStoreProduct([...storeProduct, getCurrentProduct]);
     }
-    // onHide();
+    closeProductModal();
   };
 
   console.log('storeProduct=>', storeProduct);

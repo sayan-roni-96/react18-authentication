@@ -17,6 +17,30 @@
       "email": "utest@yahoo.com",
       "password": "Rajan@123",
       "id": 3
+    },
+    {
+      "username": "raya@poy.com",
+      "email": "raya@poy.com",
+      "password": "Raya@123",
+      "id": 4
+    },
+    {
+      "username": "frok@gmail.com",
+      "email": "frok@gmail.com",
+      "password": "Pok@123",
+      "id": 5
+    },
+    {
+      "username": "pom@poy.com",
+      "email": "pom@poy.com",
+      "password": "Pom123@",
+      "id": 6
+    },
+    {
+      "username": "tom@gmail.com",
+      "email": "tom@gmail.com",
+      "password": "Tom@123",
+      "id": 7
     }
   ]
 }
