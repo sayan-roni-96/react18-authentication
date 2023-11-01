@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './header_footer/Header';
 import Footer from './header_footer/Footer';
-import { Card, Col, Container, Row, Button } from 'react-bootstrap';
+import { Card, Col, Container, Row } from 'react-bootstrap';
 import ProductModal from './Modal/ProductModal';
 
 const CategoryProducts = () => {
@@ -15,11 +15,13 @@ const CategoryProducts = () => {
   const [showModal, setShowModal] = useState(false);
 
   // For add to cart
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState();
+  const [newQuantity, setNewQuantity] = useState();
   const [storeProduct, setStoreProduct] = useState([]);
 
   // Function to open the modal with the selected product
   const openProductModal = (product) => {
+    console.log('product=>', product);
     setSelectedProduct(product);
     setShowModal(true);
   };
@@ -35,29 +37,52 @@ const CategoryProducts = () => {
       // fetch(`${process.env.REACT_APP_USER_CATEGORY_ONLINE_API}/${categoryId}/products`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data); // Log the response data
-        setProducts(data);
+        const newProductData = data.map((product) => ({
+          ...product,
+          productQuantity: 0,
+        }));
+
+        console.log('newListOfProduct=>', newProductData);
+        setProducts(newProductData);
       })
       .catch((error) => console.error('Error fetching data: ', error));
   }, [categoryId]);
 
-  const handleIncrement = () => {
-    setQuantity(quantity + 1);
+  const handleIncrement = (productValue) => {
+    const incrementedDataProduct = products?.map((pData) => {
+      if (pData.id === productValue.id) {
+        setQuantity(productValue.productQuantity++);
+        setNewQuantity(pData.productQuantity);
+        return { ...pData, productQuantity: pData.productQuantity };
+        // return { ...pData, productQuantity: quantity };
+      }
+      return pData;
+    });
+    console.log('incrementedDataProduct=>', incrementedDataProduct);
+    return incrementedDataProduct;
   };
 
-  const handleDecrement = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
+  const handleDecrement = (productValue) => {
+    const decrementedDataProduct = products?.map((pData) => {
+      if (pData.id === productValue.id) {
+        if (productValue.productQuantity === 0) {
+          setQuantity(productValue.productQuantity);
+        } else {
+          setQuantity(productValue.productQuantity--);
+          setNewQuantity(pData.productQuantity);
+        }
+        return { ...pData, productQuantity: pData.productQuantity };
+      }
+      return pData;
+    });
+    console.log('decrementedDataProduct=>', decrementedDataProduct);
+    return decrementedDataProduct;
   };
 
   const addTocart = () => {
     const getCurrentProduct = {
       product: selectedProduct,
-      quantityValue: quantity,
     };
- 
-    console.log('getCurrentProduct=>', getCurrentProduct);
 
     if (
       storeProduct.findIndex((p) => p.product.id === selectedProduct.id) === -1
@@ -66,8 +91,6 @@ const CategoryProducts = () => {
     }
     closeProductModal();
   };
-
-  console.log('storeProduct=>', storeProduct);
 
   return (
     <div className="dashboard-container">
@@ -102,7 +125,7 @@ const CategoryProducts = () => {
           product={selectedProduct}
           onHide={closeProductModal}
           storeProduct={storeProduct}
-          quantity={quantity}
+          quantity={1}
           addTocart={addTocart}
           handleIncrement={handleIncrement}
           handleDecrement={handleDecrement}

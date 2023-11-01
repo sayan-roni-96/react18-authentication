@@ -13,6 +13,7 @@ const ProductModal = ({
   handleIncrement,
   handleDecrement,
 }) => {
+  console.log('quantity=>', quantity);
   return (
     <>
       <Modal show={show} onHide={onHide} centered>
@@ -46,7 +47,7 @@ const ProductModal = ({
               </strong>
               <p>{product.description}</p>
               <p>Price: ${product.price}</p>
-              <p>Quantity: {quantity}</p>
+              <p>Quantity: {product.productQuantity}</p>
               <Button
                 variant="primary"
                 onClick={() => {
@@ -59,10 +60,16 @@ const ProductModal = ({
                 Add to Cart
               </Button>
               <div className="d-flex justify-content-between mt-2">
-                <Button variant="secondary" onClick={handleDecrement}>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleDecrement(product)}
+                >
                   -
                 </Button>
-                <Button variant="secondary" onClick={handleIncrement}>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleIncrement(product)}
+                >
                   +
                 </Button>
               </div>
