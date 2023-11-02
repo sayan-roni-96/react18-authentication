@@ -37,6 +37,7 @@ const CategoryProducts = () => {
       // fetch(`${process.env.REACT_APP_USER_CATEGORY_ONLINE_API}/${categoryId}/products`)
       .then((response) => response.json())
       .then((data) => {
+        console.log('data=>', data);
         const newProductData = data.map((product) => ({
           ...product,
           productQuantity: 0,
@@ -49,6 +50,7 @@ const CategoryProducts = () => {
   }, [categoryId]);
 
   const handleIncrement = (productValue) => {
+    console.log('productValue=>', productValue);
     const incrementedDataProduct = products?.map((pData) => {
       if (pData.id === productValue.id) {
         setQuantity(productValue.productQuantity++);
