@@ -1,14 +1,16 @@
 import React from 'react';
 import { Modal, Button, Table } from 'react-bootstrap';
 
-const ProductDetailsModal = ({ product, productModal, onClose }) => {
-    const calculateTotalPrice = () => {
-        let total = 0;
-        for (const item of product) {
-          total += item.quantityValue * item.product.price;
-        }
-        return total;
-      };
+const ProductDetailsModal = ({ product, productModal, onClose, handleIncrement, handleDecrement }) => {
+  const calculateTotalPrice = () => {
+    let total = 0;
+    for (const item of product) {
+      total += item.product.productQuantity * item.product.price;
+    }
+    return total;
+  };
+  console.log('product',product);
+
   return (
     <Modal show={productModal} onHide={onClose} centered>
       <Modal.Header closeButton>
@@ -19,8 +21,8 @@ const ProductDetailsModal = ({ product, productModal, onClose }) => {
           <Table striped bordered hover>
             <thead>
               <tr>
-                <th>Product Title</th>
                 <th>Image</th>
+                <th>Product Title</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 {/* Add more table headers if needed */}
@@ -29,7 +31,6 @@ const ProductDetailsModal = ({ product, productModal, onClose }) => {
             <tbody>
               {product.map((item, index) => (
                 <tr key={index}>
-                  <td style={{ maxWidth: '200px' }}>{item.product.title}</td>
                   <td>
                     <img
                       src={item.product.images[0]}
@@ -37,8 +38,26 @@ const ProductDetailsModal = ({ product, productModal, onClose }) => {
                       style={{ maxWidth: '100px', maxHeight: '100px' }}
                     />
                   </td>
-                  <td>{item.quantityValue}</td>
-                  <td>{item.quantityValue * item.product.price}</td>
+                  <td style={{ maxWidth: '200px' }}>{item.product.title}</td>
+                  
+                  <td>
+                    <div className="d-flex justify-content-between">
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleDecrement(item.product)}
+                      >
+                        -
+                      </Button>
+                      {item.product.productQuantity}
+                      <Button
+                        variant="secondary"
+                        onClick={() => handleIncrement(item.product)}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </td>
+                  <td>{item.product.productQuantity * item.product.price}</td>
                   {/* Add more table cells for additional details */}
                 </tr>
               ))}

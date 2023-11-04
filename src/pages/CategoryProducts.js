@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Header from './header_footer/Header';
 import Footer from './header_footer/Footer';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Row } from 'react-bootstrap';
 import ProductModal from './Modal/ProductModal';
 
 const CategoryProducts = () => {
@@ -18,6 +18,10 @@ const CategoryProducts = () => {
   const [quantity, setQuantity] = useState();
   const [newQuantity, setNewQuantity] = useState();
   const [storeProduct, setStoreProduct] = useState([]);
+  // Search
+  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
+  
 
   // Function to open the modal with the selected product
   const openProductModal = (product) => {
@@ -91,6 +95,16 @@ const CategoryProducts = () => {
     }
     closeProductModal();
   };
+   // Search Function
+  const onSearch = (evt) => {
+    setSearch(evt.target.value);
+  };
+
+  const onGetSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(search);
+    setSearch('');
+  };
 
   return (
     <div className="dashboard-container">
@@ -105,8 +119,31 @@ const CategoryProducts = () => {
         </div>
       </div>
       <Container>
+      <form onSubmit={onGetSearch}>
+          <input
+            type="text"
+            placeholder="Search Products by name"
+            value={search}
+            onChange={(e) => onSearch(e)}
+          />
+          <Button type="submit" variant="primary">
+            Reset
+          </Button>
+        </form>
         <Row>
-          {products.map((product) => (
+          {products &&
+              products
+                .filter((value) => {
+                  if (search === '') {
+                    return value;
+                  } else if (
+                    value.title.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return value;
+                  } else {
+                    return;
+                  }
+                }).map((product) => (
             <Col key={product.id} sm={6} md={3}>
               <Card onClick={() => openProductModal(product)}>
                 <Card.Img variant="top" src={product.images} />
