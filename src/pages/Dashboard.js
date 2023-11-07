@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Col, Container, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import Header from './header_footer/Header';
 import Footer from './header_footer/Footer';
 import {useNavigate } from 'react-router-dom';
@@ -7,6 +7,8 @@ import {useNavigate } from 'react-router-dom';
 const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [search, setSearch] = useState('');
   
   // Initialize useNavigate
   const navigate = useNavigate();
@@ -29,6 +31,17 @@ const Dashboard = () => {
   const toggleCategoriesView = () => {
     setShowAllCategories(!showAllCategories);
   };
+   // Search Function
+   const onSearch = (evt) => {
+    setSearch(evt.target.value);
+  };
+
+  const onGetSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(search);
+    setSearch('');
+  };
+
 
   return (
     <div className="dashboard-container">
@@ -43,8 +56,27 @@ const Dashboard = () => {
         </div>
       </div>
       <Container>
+
+      <Form onSubmit={onGetSearch} >
+          <Form.Group className="mb-3" >
+            <Form.Control type="text" placeholder="Search Products by name" value={search} onChange={(e) => onSearch(e)}/>
+          </Form.Group>
+          <Button variant="primary" type="submit" onClick={() => setSearch('')}>
+               Reset
+           </Button>
+      </Form>
   <Row>
-    {categories.slice(0, showAllCategories ? categories.length : 4).map((category) => (
+    {categories.filter((value) => {
+                  if (search === '') {
+                    return value;
+                  } else if (
+                    value.name.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return value;
+                  } else {
+                    return;
+                  }
+                }).slice(0, showAllCategories ? categories.length : 4).map((category) => (
       <Col key={category.id} sm={6} md={3}>
         
         <Card onClick={() => navigateToCategoryProducts(category.id)}>

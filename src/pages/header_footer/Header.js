@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiOutlineShoppingCart } from 'react-icons/ai';
 import ProductDetailsModal from './ProductDetailsModal';
 
-const Header = ({ storeProduct }) => {
+const Header = ({ storeProduct ,handleIncrement,handleDecrement}) => {
   const [productModal, setProductModal] = useState(false);
 
   const LogOut = () => {
@@ -33,6 +33,9 @@ const Header = ({ storeProduct }) => {
           product={storeProduct}
           productModal={productModal}
           onClose={closeProductModal}
+          handleDecrement={handleDecrement}
+          handleIncrement={handleIncrement}
+
         />
       )}
     </header>

@@ -1,6 +1,7 @@
 // ProductModal.js
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Row, Col, Button } from 'react-bootstrap';
+import { AiOutlineMinus, AiOutlinePlus, AiOutlinePlusSquare } from 'react-icons/ai';
 
 const ProductModal = ({
   show,
@@ -14,6 +15,7 @@ const ProductModal = ({
   handleDecrement,
 }) => {
   console.log('quantity=>', quantity);
+
   return (
     <>
       <Modal show={show} onHide={onHide} centered>
@@ -47,8 +49,10 @@ const ProductModal = ({
               </strong>
               <p>{product.description}</p>
               <p>Price: ${product.price}</p>
-              <p>Quantity: {product.productQuantity}</p>
+              <p><span className='d-flex justify-content-between w-2'>Quantity:<AiOutlineMinus onClick={() => handleDecrement(product)} />{product.productQuantity} <AiOutlinePlus onClick={() => handleIncrement(product)}/></span></p>
+              
               <Button
+               disabled={quantity === 0 || storeProduct.length === 0}
                 variant="primary"
                 onClick={() => {
                   //addToCart(product, quantity); // Add the product to the cart
@@ -59,20 +63,10 @@ const ProductModal = ({
               >
                 Add to Cart
               </Button>
-              <div className="d-flex justify-content-between mt-2">
-                <Button
-                  variant="secondary"
-                  onClick={() => handleDecrement(product)}
-                >
-                  -
-                </Button>
-                <Button
-                  variant="secondary"
-                  onClick={() => handleIncrement(product)}
-                >
-                  +
-                </Button>
-              </div>
+              {/* <div className="d-flex justify-content-between mt-2">
+              
+                 <AiOutlinePlus onClick={() => handleIncrement(product)}/>
+              </div> */}
               {/* Add more product details here */}
             </Col>
           </Row>
