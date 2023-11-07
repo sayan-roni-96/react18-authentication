@@ -1,11 +1,11 @@
 // CategoryProducts.js
 
-import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import Header from './header_footer/Header';
-import Footer from './header_footer/Footer';
-import { Button, Card, Col, Container, Row } from 'react-bootstrap';
-import ProductModal from './Modal/ProductModal';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import Header from "./header_footer/Header";
+import Footer from "./header_footer/Footer";
+import { Button, Card, Col, Container, Row } from "react-bootstrap";
+import ProductModal from "./Modal/ProductModal";
 
 const CategoryProducts = () => {
   const location = useLocation();
@@ -19,13 +19,12 @@ const CategoryProducts = () => {
   const [newQuantity, setNewQuantity] = useState();
   const [storeProduct, setStoreProduct] = useState([]);
   // Search
-  const [searchQuery, setSearchQuery] = useState('');
-  const [search, setSearch] = useState('');
-  
+  const [searchQuery, setSearchQuery] = useState("");
+  const [search, setSearch] = useState("");
 
   // Function to open the modal with the selected product
   const openProductModal = (product) => {
-    console.log('product=>', product);
+    console.log("product=>", product);
     setSelectedProduct(product);
     setShowModal(true);
   };
@@ -41,20 +40,20 @@ const CategoryProducts = () => {
       // fetch(`${process.env.REACT_APP_USER_CATEGORY_ONLINE_API}/${categoryId}/products`)
       .then((response) => response.json())
       .then((data) => {
-        console.log('data=>', data);
+        console.log("data=>", data);
         const newProductData = data.map((product) => ({
           ...product,
           productQuantity: 0,
         }));
 
-        console.log('newListOfProduct=>', newProductData);
+        console.log("newListOfProduct=>", newProductData);
         setProducts(newProductData);
       })
-      .catch((error) => console.error('Error fetching data: ', error));
+      .catch((error) => console.error("Error fetching data: ", error));
   }, [categoryId]);
 
   const handleIncrement = (productValue) => {
-    console.log('productValue=>', productValue);
+    console.log("productValue@@@=I>", productValue);
     const incrementedDataProduct = products?.map((pData) => {
       if (pData.id === productValue.id) {
         setQuantity(productValue.productQuantity++);
@@ -64,13 +63,15 @@ const CategoryProducts = () => {
       }
       return pData;
     });
-    console.log('incrementedDataProduct=>', incrementedDataProduct);
+    console.log("incrementedDataProduct=>", incrementedDataProduct);
     return incrementedDataProduct;
   };
 
   const handleDecrement = (productValue) => {
+    console.log("productValue@@@=D>", productValue);
+
     const decrementedDataProduct = products?.map((pData) => {
-      if (pData.id === productValue.id) {
+      if (pData?.id === productValue?.id) {
         if (productValue.productQuantity === 0) {
           setQuantity(productValue.productQuantity);
         } else {
@@ -81,7 +82,7 @@ const CategoryProducts = () => {
       }
       return pData;
     });
-    console.log('decrementedDataProduct=>', decrementedDataProduct);
+    console.log("decrementedDataProduct=>", decrementedDataProduct);
     return decrementedDataProduct;
   };
 
@@ -97,7 +98,7 @@ const CategoryProducts = () => {
     }
     closeProductModal();
   };
-   // Search Function
+  // Search Function
   const onSearch = (evt) => {
     setSearch(evt.target.value);
   };
@@ -105,12 +106,25 @@ const CategoryProducts = () => {
   const onGetSearch = (e) => {
     e.preventDefault();
     setSearchQuery(search);
-    setSearch('');
+    setSearch("");
   };
+
+  const toGetDataFromChild = (chdData) => {
+    console.log("chdData=>", chdData);
+  };
+
+  console.log("selectedProduct=>", selectedProduct);
+
+  // useEffect(() => {}, [selectedProduct]);
 
   return (
     <div className="dashboard-container">
-      <Header storeProduct={storeProduct} />
+      <Header
+        storeProduct={storeProduct}
+        handleIncrement={handleIncrement}
+        handleDecrement={handleDecrement}
+        selectedParticularProduct={selectedProduct}
+      />
       <div className="banner-container">
         <img src="/assets/banner_1.jpeg" alt="Background" />
         <div className="banner-content">
@@ -121,7 +135,7 @@ const CategoryProducts = () => {
         </div>
       </div>
       <Container>
-      <form onSubmit={onGetSearch}>
+        <form onSubmit={onGetSearch}>
           <input
             type="text"
             placeholder="Search Products by name"
@@ -134,27 +148,28 @@ const CategoryProducts = () => {
         </form>
         <Row>
           {products &&
-              products
-                .filter((value) => {
-                  if (search === '') {
-                    return value;
-                  } else if (
-                    value.title.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return value;
-                  } else {
-                    return;
-                  }
-                }).map((product) => (
-            <Col key={product.id} sm={6} md={3}>
-              <Card onClick={() => openProductModal(product)}>
-                <Card.Img variant="top" src={product.images} />
-                <Card.Body>
-                  <Card.Title>{product.title}</Card.Title>
-                </Card.Body>
-              </Card>
-            </Col>
-          ))}
+            products
+              .filter((value) => {
+                if (search === "") {
+                  return value;
+                } else if (
+                  value.title.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return value;
+                } else {
+                  return;
+                }
+              })
+              .map((product) => (
+                <Col key={product.id} sm={6} md={3}>
+                  <Card onClick={() => openProductModal(product)}>
+                    <Card.Img variant="top" src={product.images} />
+                    <Card.Body>
+                      <Card.Title>{product.title}</Card.Title>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
         </Row>
       </Container>
       <Footer />
@@ -168,6 +183,7 @@ const CategoryProducts = () => {
           addTocart={addTocart}
           handleIncrement={handleIncrement}
           handleDecrement={handleDecrement}
+          toGetDataFromChild={toGetDataFromChild}
         />
       )}
     </div>

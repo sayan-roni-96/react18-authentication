@@ -1,7 +1,16 @@
-import React from 'react';
-import { Modal, Button, Table } from 'react-bootstrap';
+import React, { useEffect, useMemo } from "react";
+import { Modal, Button, Table } from "react-bootstrap";
 
-const ProductDetailsModal = ({ product, productModal, onClose, handleIncrement, handleDecrement }) => {
+const ProductDetailsModal = ({
+  product,
+  productModal,
+  onClose,
+  selectedParticularProduct,
+  handleIncrement,
+  handleDecrement,
+}) => {
+  console.log("selectedParticularProduct=>", selectedParticularProduct);
+
   const calculateTotalPrice = () => {
     let total = 0;
     for (const item of product) {
@@ -9,14 +18,16 @@ const ProductDetailsModal = ({ product, productModal, onClose, handleIncrement, 
     }
     return total;
   };
-  console.log('product',product);
+  console.log("product", product);
+
+  useMemo(() => {}, [selectedParticularProduct]);
 
   return (
     <Modal show={productModal} onHide={onClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Cart</Modal.Title>
       </Modal.Header>
-      <Modal.Body style={{ maxHeight: '500px', overflowY: 'auto' }}>
+      <Modal.Body style={{ maxHeight: "500px", overflowY: "auto" }}>
         {product && product.length > 0 ? (
           <Table striped bordered hover>
             <thead>
@@ -35,23 +46,23 @@ const ProductDetailsModal = ({ product, productModal, onClose, handleIncrement, 
                     <img
                       src={item.product.images[0]}
                       alt={item.product.title}
-                      style={{ maxWidth: '100px', maxHeight: '100px' }}
+                      style={{ maxWidth: "100px", maxHeight: "100px" }}
                     />
                   </td>
-                  <td style={{ maxWidth: '200px' }}>{item.product.title}</td>
-                  
+                  <td style={{ maxWidth: "200px" }}>{item.product.title}</td>
+
                   <td>
                     <div className="d-flex justify-content-between">
                       <Button
                         variant="secondary"
-                        onClick={() => handleDecrement(item.product)}
+                        onClick={() => handleDecrement(item)}
                       >
                         -
                       </Button>
                       {item.product.productQuantity}
                       <Button
                         variant="secondary"
-                        onClick={() => handleIncrement(item.product)}
+                        onClick={() => handleIncrement(item)}
                       >
                         +
                       </Button>

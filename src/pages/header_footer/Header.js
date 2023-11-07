@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
-import ProductDetailsModal from './ProductDetailsModal';
+import React, { useEffect, useState } from "react";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import ProductDetailsModal from "./ProductDetailsModal";
 
-const Header = ({ storeProduct ,handleIncrement,handleDecrement}) => {
+const Header = ({
+  storeProduct,
+  selectedParticularProduct,
+  handleIncrement,
+  handleDecrement,
+}) => {
+  // console.log("selectedParticularProduct=>", selectedParticularProduct);
   const [productModal, setProductModal] = useState(false);
 
   const LogOut = () => {
-    localStorage.removeItem('userdata');
+    localStorage.removeItem("userdata");
     window.location.reload();
   };
 
@@ -18,6 +24,8 @@ const Header = ({ storeProduct ,handleIncrement,handleDecrement}) => {
     setProductModal(false);
   };
 
+  useEffect(() => {}, [selectedParticularProduct]);
+
   return (
     <header>
       <h1>Dashboard</h1>
@@ -28,14 +36,14 @@ const Header = ({ storeProduct ,handleIncrement,handleDecrement}) => {
       </button>
 
       <button onClick={LogOut}>Logout</button>
-      {storeProduct &&  (
+      {storeProduct && (
         <ProductDetailsModal
           product={storeProduct}
           productModal={productModal}
           onClose={closeProductModal}
           handleDecrement={handleDecrement}
           handleIncrement={handleIncrement}
-
+          selectedParticularProduct={selectedParticularProduct}
         />
       )}
     </header>
