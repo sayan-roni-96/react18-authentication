@@ -52,7 +52,7 @@ const ProductModal = ({
               <p><span className='d-flex justify-content-between w-2'>Quantity:<AiOutlineMinus onClick={() => handleDecrement(product)} />{product.productQuantity} <AiOutlinePlus onClick={() => handleIncrement(product)}/></span></p>
               
               <Button
-               disabled={quantity === 0 || storeProduct.length === 0}
+              //  disabled={quantity === 0 || storeProduct.length === 0}
                 variant="primary"
                 onClick={() => {
                   //addToCart(product, quantity); // Add the product to the cart
