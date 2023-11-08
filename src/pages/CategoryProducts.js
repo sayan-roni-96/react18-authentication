@@ -55,11 +55,20 @@ const CategoryProducts = () => {
   const handleIncrement = (productValue) => {
     console.log("productValue@@@=I>", productValue);
     const incrementedDataProduct = products?.map((pData) => {
-      if (pData.id === productValue.id) {
-        setQuantity(productValue.productQuantity++);
-        setNewQuantity(pData.productQuantity);
-        return { ...pData, productQuantity: pData.productQuantity };
-        // return { ...pData, productQuantity: quantity };
+      if (productValue?.product) {
+        if (pData.id === productValue?.product?.id) {
+          setQuantity(productValue.product.productQuantity++);
+          setNewQuantity(pData.productQuantity);
+          return { ...pData, productQuantity: pData.productQuantity };
+          // return { ...pData, productQuantity: quantity };
+        }
+      } else {
+        if (pData.id === productValue.id) {
+          setQuantity(productValue.productQuantity++);
+          setNewQuantity(pData.productQuantity);
+          return { ...pData, productQuantity: pData.productQuantity };
+          // return { ...pData, productQuantity: quantity };
+        }
       }
       return pData;
     });
@@ -71,7 +80,14 @@ const CategoryProducts = () => {
     console.log("productValue@@@=D>", productValue);
 
     const decrementedDataProduct = products?.map((pData) => {
-      if (pData?.id === productValue?.id) {
+      if (productValue?.product) {
+        if (pData.id === productValue?.product?.id) {
+          setQuantity(productValue.product.productQuantity--);
+          setNewQuantity(pData.productQuantity);
+          return { ...pData, productQuantity: pData.productQuantity };
+          // return { ...pData, productQuantity: quantity };
+        }
+      } else if (pData?.id === productValue?.id) {
         if (productValue.productQuantity === 0) {
           setQuantity(productValue.productQuantity);
         } else {
@@ -179,7 +195,6 @@ const CategoryProducts = () => {
           product={selectedProduct}
           onHide={closeProductModal}
           storeProduct={storeProduct}
-          quantity={1}
           addTocart={addTocart}
           handleIncrement={handleIncrement}
           handleDecrement={handleDecrement}

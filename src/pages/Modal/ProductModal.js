@@ -1,5 +1,5 @@
 // ProductModal.js
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Modal, Row, Col, Button } from "react-bootstrap";
 import {
   AiOutlineMinus,
@@ -11,9 +11,7 @@ const ProductModal = ({
   show,
   product,
   onHide,
-  onAddToCart,
   storeProduct,
-  quantity,
   addTocart,
   handleIncrement,
   handleDecrement,

@@ -1,16 +1,13 @@
-import React, { useEffect, useMemo } from "react";
+import React from "react";
 import { Modal, Button, Table } from "react-bootstrap";
 
 const ProductDetailsModal = ({
   product,
   productModal,
   onClose,
-  selectedParticularProduct,
   handleIncrement,
   handleDecrement,
 }) => {
-  console.log("selectedParticularProduct=>", selectedParticularProduct);
-
   const calculateTotalPrice = () => {
     let total = 0;
     for (const item of product) {
@@ -19,8 +16,6 @@ const ProductDetailsModal = ({
     return total;
   };
   console.log("product", product);
-
-  useMemo(() => {}, [selectedParticularProduct]);
 
   return (
     <Modal show={productModal} onHide={onClose} centered>
