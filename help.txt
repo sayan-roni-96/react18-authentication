@@ -1,0 +1,2 @@
+// Ecomm API
+https://fakeapi.platzi.com/en/rest/products
