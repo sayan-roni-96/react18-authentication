@@ -41,6 +41,12 @@
       "email": "tom@gmail.com",
       "password": "Tom@123",
       "id": 7
+    },
+    {
+      "username": "utest@yahoo.com",
+      "email": "utest@yahoo.com",
+      "password": "Asraf@12dds",
+      "id": 8
     }
   ]
 }

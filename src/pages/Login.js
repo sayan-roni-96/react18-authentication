@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import './Login.css';
-import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./Login.css";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 // Import an SVG eye icon (you can use any SVG icon you prefer)
 //import EyeIcon from './eye-icon.svg';
 
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [type, setType] = useState('password');
+  const [userName, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [type, setType] = useState("password");
   //const [icon, setIcon] = useState(eyeOff);
   //const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -44,21 +44,21 @@ const Login = () => {
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    console.log('api=>', `${process.env.REACT_APP_USER_ONLINE_API}/api/users`);
+    console.log("api=>", `${process.env.REACT_APP_USER_ONLINE_API}/api/users`);
 
     let hasError = false;
-    if (userName == '' || userName.trim() == '') {
-      toast.error('Please fill in the username field.');
+    if (userName == "" || userName.trim() == "") {
+      toast.error("Please fill in the username field.");
       hasError = true;
-    } else if (email.trim() === '') {
-      toast.error('Please fill in the email field.');
+    } else if (email.trim() === "") {
+      toast.error("Please fill in the email field.");
       hasError = true;
     } else if (!isEmailValid(email)) {
-      toast.error('Please enter a valid email address.');
+      toast.error("Please enter a valid email address.");
       hasError = true;
     } else if (!isPasswordValid(password)) {
       toast.error(
-        'Please enter a valid password with at least 6 characters, one uppercase letter, one lowercase letter, one special character, and one digit.'
+        "Please enter a valid password with at least 6 characters, one uppercase letter, one lowercase letter, one special character, and one digit."
       );
       hasError = true;
     }
@@ -75,21 +75,21 @@ const Login = () => {
       };
 
       axios
-        // .post(`${process.env.REACT_APP_USER_ONLINE_API}/api/users`, userData)
-        .post(`${process.env.REACT_APP_BASE_URL}/users`, formFieldData)
+        .post(`${process.env.REACT_APP_USER_ONLINE_API}/api/users`, userData)
+        // .post(`${process.env.REACT_APP_BASE_URL}/users`, formFieldData)
         .then((resp) => {
-          console.log('resp =>', resp);
+          console.log("resp =>", resp);
           if (resp.status === 201) {
-            console.log('User added successfully.');
+            console.log("User added successfully.");
 
-            localStorage.setItem('userdata', JSON.stringify(resp.data));
-            setEmail('');
-            setPassword('');
+            localStorage.setItem("userdata", JSON.stringify(resp.data));
+            setEmail("");
+            setPassword("");
             window.location.reload();
           }
         })
         .catch((err) => {
-          console.error('save_error =>', err);
+          console.error("save_error =>", err);
         });
     }
   };
@@ -133,7 +133,7 @@ const Login = () => {
           <label htmlFor="pswrd">Your password</label>
           <div className="password-input-container">
             <input
-              type={isPasswordVisible ? 'text' : 'password'} // Toggle input type based on visibility
+              type={isPasswordVisible ? "text" : "password"} // Toggle input type based on visibility
               placeholder="Enter Password"
               name="pswrd"
               value={password}
@@ -142,7 +142,7 @@ const Login = () => {
             <span
               className="flex justify-around items-center"
               onClick={togglePasswordVisibility}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               {isPasswordVisible ? <AiFillEye /> : <AiFillEyeInvisible />}
             </span>
