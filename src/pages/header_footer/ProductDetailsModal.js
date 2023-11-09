@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Modal, Button, Table } from "react-bootstrap";
 
 const ProductDetailsModal = ({
@@ -15,7 +15,20 @@ const ProductDetailsModal = ({
     }
     return total;
   };
-  console.log("product", product);
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    // Update the cart state whenever the product prop changes
+    setCart(product);
+  }, [product]);
+
+  const handleRemoveModal = (itemToRemove) => {
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item !== itemToRemove);
+      return updatedCart;
+    });
+  };
 
   return (
     <Modal show={productModal} onHide={onClose} centered>
@@ -23,7 +36,7 @@ const ProductDetailsModal = ({
         <Modal.Title>Cart</Modal.Title>
       </Modal.Header>
       <Modal.Body style={{ maxHeight: "500px", overflowY: "auto" }}>
-        {product && product.length > 0 ? (
+        {cart && cart.length > 0 ? (
           <Table striped bordered hover>
             <thead>
               <tr>
@@ -31,11 +44,11 @@ const ProductDetailsModal = ({
                 <th>Product Title</th>
                 <th>Quantity</th>
                 <th>Price</th>
-                {/* Add more table headers if needed */}
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {product.map((item, index) => (
+              {cart.map((item, index) => (
                 <tr key={index}>
                   <td>
                     <img
@@ -64,7 +77,15 @@ const ProductDetailsModal = ({
                     </div>
                   </td>
                   <td>{item.product.productQuantity * item.product.price}</td>
-                  {/* Add more table cells for additional details */}
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleRemoveModal(item)}
+                      style={{ marginRight: "5px" }}
+                    >
+                      Remove
+                    </Button>
+                  </td>
                 </tr>
               ))}
             </tbody>
