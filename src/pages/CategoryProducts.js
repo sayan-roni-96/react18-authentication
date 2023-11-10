@@ -137,6 +137,7 @@ const CategoryProducts = () => {
     <div className="dashboard-container">
       <Header
         storeProduct={storeProduct}
+        setStoreProduct={setStoreProduct}
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
         selectedParticularProduct={selectedProduct}

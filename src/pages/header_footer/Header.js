@@ -2,7 +2,12 @@ import React, { useState } from "react";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import ProductDetailsModal from "./ProductDetailsModal";
 
-const Header = ({ storeProduct, handleIncrement, handleDecrement }) => {
+const Header = ({
+  storeProduct,
+  setStoreProduct,
+  handleIncrement,
+  handleDecrement,
+}) => {
   // console.log("selectedParticularProduct=>", selectedParticularProduct);
   const [productModal, setProductModal] = useState(false);
 
@@ -32,6 +37,7 @@ const Header = ({ storeProduct, handleIncrement, handleDecrement }) => {
       {storeProduct && (
         <ProductDetailsModal
           product={storeProduct}
+          setStoreProduct={setStoreProduct}
           productModal={productModal}
           onClose={closeProductModal}
           handleDecrement={handleDecrement}
