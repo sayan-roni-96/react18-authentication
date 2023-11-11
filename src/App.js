@@ -3,6 +3,7 @@ import './App.css';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import ComponentRoute from './ComponentRoute';
+import { Route } from 'react-router-dom';
 
 function App() {
   const getLocalstorageData = JSON.parse(localStorage.getItem('userdata'));

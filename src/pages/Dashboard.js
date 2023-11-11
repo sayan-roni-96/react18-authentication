@@ -3,10 +3,12 @@ import { Button, Card, Col, Container, Form, Row } from 'react-bootstrap';
 import Header from './header_footer/Header';
 import Footer from './header_footer/Footer';
 import {useNavigate } from 'react-router-dom';
+import Loaders from './Loaders/Loaders';
 
 const Dashboard = () => {
   const [categories, setCategories] = useState([]);
   const [showAllCategories, setShowAllCategories] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
   const [searchQuery, setSearchQuery] = useState('');
   const [search, setSearch] = useState('');
   
@@ -21,11 +23,18 @@ const Dashboard = () => {
   
 
   useEffect(() => {
+    setLoading(true);
     // Fetch categories data from your API
     fetch('https://api.escuelajs.co/api/v1/categories') // Replace with your API URL
       .then((response) => response.json())
-      .then((data) => setCategories(data))
-      .catch((error) => console.error('Error fetching data: ', error));
+      .then((data) => {
+        setCategories(data);
+        setLoading(false); // Set loading to false after the fetch is complete
+      })
+      .catch((error) => {
+        console.error('Error fetching data: ', error);
+        setLoading(false); // Set loading to false in case of an error
+      });
   }, []);
 
   const toggleCategoriesView = () => {
@@ -46,7 +55,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-container">
       <Header/>
-      <div className="banner-container">
+      <div className="banner-container" style={{ marginBottom: '20px' }}>
         <img src="/assets/banner_1.jpeg" alt="Background" />
         <div className="banner-content">
           <div className="container">
@@ -57,7 +66,7 @@ const Dashboard = () => {
       </div>
       <Container>
 
-      <Form onSubmit={onGetSearch} >
+      <Form onSubmit={onGetSearch} style={{ marginBottom: '20px' }}>
           <Form.Group className="mb-3" >
             <Form.Control type="text" placeholder="Search Products by name" value={search} onChange={(e) => onSearch(e)}/>
           </Form.Group>
@@ -65,8 +74,8 @@ const Dashboard = () => {
                Reset
            </Button>
       </Form>
-  <Row>
-    {categories.filter((value) => {
+  <Row style={{ marginBottom: '20px' }}>
+    {loading ? (<Loaders/>):(categories.filter((value) => {
                   if (search === '') {
                     return value;
                   } else if (
@@ -77,17 +86,18 @@ const Dashboard = () => {
                     return;
                   }
                 }).slice(0, showAllCategories ? categories.length : 4).map((category) => (
-      <Col key={category.id} sm={6} md={3}>
+      <Col key={category.id} sm={6} md={3} style={{ marginBottom: '20px' }}>
         
         <Card onClick={() => navigateToCategoryProducts(category.id)}>
             <Card.Img variant="top" src={category.image} />
             <Card.Body>
-              <Card.Title>{category.name}</Card.Title>
+              <Card.Title><h6>{category.name}</h6></Card.Title>
             </Card.Body>
           </Card>
        
       </Col>
-    ))}
+    )))}
+    
   </Row>
 </Container>
 

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Modal, Button, Table } from "react-bootstrap";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 
 const ProductDetailsModal = ({
   product,
@@ -16,6 +17,15 @@ const ProductDetailsModal = ({
     }
     return total;
   };
+
+  const handleRemoveAll = () => {
+    if (window.confirm("Do you want to remove all items from the cart?")) {
+      // Set the cart state to an empty array
+      setStoreProduct([]);
+    }
+  };
+
+  const shouldShowRemoveAllButton = product.length > 0;
 
   useEffect(() => {}, [product]);
 
@@ -38,7 +48,12 @@ const ProductDetailsModal = ({
   return (
     <Modal show={productModal} onHide={onClose} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Cart</Modal.Title>
+        <Modal.Title> <span style={{ marginRight: "10px" }}>Cart</span></Modal.Title>
+        {shouldShowRemoveAllButton && (
+            <Button variant="danger" onClick={handleRemoveAll}  size="sm" style={{ marginLeft: "5px",height: '30px', width : '100px'}}>
+              Remove All
+            </Button>
+          )}
       </Modal.Header>
       <Modal.Body style={{ maxHeight: "500px", overflowY: "auto" }}>
         {product && product.length > 0 ? (
@@ -67,19 +82,14 @@ const ProductDetailsModal = ({
 
                     <td>
                       <div className="d-flex justify-content-between">
-                        <Button
-                          variant="secondary"
+                        <AiOutlineMinus
                           onClick={() => handleDecrement(item)}
-                        >
-                          -
-                        </Button>
+                        />
                         {item.product.productQuantity}
-                        <Button
-                          variant="secondary"
+                        <AiOutlinePlus
                           onClick={() => handleIncrement(item)}
-                        >
-                          +
-                        </Button>
+                        />
+                        
                       </div>
                     </td>
                     <td>{item.product.productQuantity * item.product.price}</td>

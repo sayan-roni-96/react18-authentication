@@ -1,0 +1,9 @@
+.dashboard-link {
+    text-decoration: none; /* Remove the underline */
+    color: white; /* Set the text color to white */
+  }
+  
+  .dashboard-text {
+    margin: 0; /* Remove default margin */
+  }
+  

@@ -6,6 +6,7 @@ import Header from "./header_footer/Header";
 import Footer from "./header_footer/Footer";
 import { Button, Card, Col, Container, Row } from "react-bootstrap";
 import ProductModal from "./Modal/ProductModal";
+import Loaders from "./Loaders/Loaders";
 
 const CategoryProducts = () => {
   const location = useLocation();
@@ -18,6 +19,7 @@ const CategoryProducts = () => {
   const [quantity, setQuantity] = useState();
   const [newQuantity, setNewQuantity] = useState();
   const [storeProduct, setStoreProduct] = useState([]);
+  const [loading, setLoading] = useState(true); // New loading state
   // Search
   const [searchQuery, setSearchQuery] = useState("");
   const [search, setSearch] = useState("");
@@ -41,6 +43,7 @@ const CategoryProducts = () => {
       .then((response) => response.json())
       .then((data) => {
         console.log("data=>", data);
+       
         const newProductData = data.map((product) => ({
           ...product,
           productQuantity: 0,
@@ -48,6 +51,7 @@ const CategoryProducts = () => {
 
         console.log("newListOfProduct=>", newProductData);
         setProducts(newProductData);
+        setLoading(false); // Set loading to false after the fetch is complete
       })
       .catch((error) => console.error("Error fetching data: ", error));
   }, [categoryId]);
@@ -142,7 +146,7 @@ const CategoryProducts = () => {
         handleDecrement={handleDecrement}
         selectedParticularProduct={selectedProduct}
       />
-      <div className="banner-container">
+      <div className="banner-container" style={{ marginBottom: '20px' }}>
         <img src="/assets/banner_1.jpeg" alt="Background" />
         <div className="banner-content">
           <div className="container">
@@ -152,7 +156,7 @@ const CategoryProducts = () => {
         </div>
       </div>
       <Container>
-        <form onSubmit={onGetSearch}>
+        <form onSubmit={onGetSearch} style={{ marginBottom: '20px' }}>
           <input
             type="text"
             placeholder="Search Products by name"
@@ -163,8 +167,8 @@ const CategoryProducts = () => {
             Reset
           </Button>
         </form>
-        <Row>
-          {products &&
+        <Row style={{ marginBottom: '20px' }}>
+          {loading ? (<Loaders/>):(products &&
             products
               .filter((value) => {
                 if (search === "") {
@@ -178,15 +182,16 @@ const CategoryProducts = () => {
                 }
               })
               .map((product) => (
-                <Col key={product.id} sm={6} md={3}>
+                <Col key={product.id} sm={6} md={3} style={{ marginBottom: '20px' }}>
                   <Card onClick={() => openProductModal(product)}>
                     <Card.Img variant="top" src={product.images} />
                     <Card.Body>
-                      <Card.Title>{product.title}</Card.Title>
+                      <Card.Title><h6>{product.title}</h6></Card.Title>
                     </Card.Body>
                   </Card>
                 </Col>
-              ))}
+              )))}
+          
         </Row>
       </Container>
       <Footer />
